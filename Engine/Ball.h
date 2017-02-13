@@ -14,6 +14,7 @@ public:
 	void ReboundX();
 	void ReboundY();
 	RectF GetRect() const;
+	Vec2 GetVel() const;
 
 private:
 	Vec2 pos;
