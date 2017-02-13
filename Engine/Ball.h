@@ -13,6 +13,7 @@ public:
 	bool DoWallCollision(const RectF& walls);
 	void ReboundX();
 	void ReboundY();
+	RectF GetRect() const;
 
 private:
 	Vec2 pos;
