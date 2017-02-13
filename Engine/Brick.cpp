@@ -24,12 +24,18 @@ void Brick::Draw(Graphics& gfx) const
 {
 	if (!destroyed)
 	{
-		gfx.DrawRect(GetRect(), color);
+		RectF rect(GetRect());
+		rect = GetExpanded(rect);
+		gfx.DrawRect(rect, color);
 	}
 }
-
 
 RectF Brick::GetRect() const
 {
 	return RectF(pos.x, pos.x + width, pos.y, pos.y + height );
+}
+
+RectF Brick::GetExpanded(RectF & rect_in) const
+{
+	return RectF(rect_in.left + padding, rect_in.right - padding, rect_in.top + padding, rect_in.bottom -padding);
 }
