@@ -27,7 +27,8 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	ball(Vec2(300.0f, 300.0f), Vec2(300.0f, 300.0f)),
 	walls(0.0f, float(gfx.ScreenWidth), 0.0f, float(gfx.ScreenHeight)),
-	brick(Vec2(200.0f, 200.0f), 15.0f, 10.0f)
+	brick(Vec2(200.0f, 200.0f), 15.0f, 10.0f),
+	pad(Vec2(400.0f, 550.0f), Vec2(500.0f, 0.0f))
 {
 }
 
@@ -45,10 +46,12 @@ void Game::UpdateModel()
 	ball.Update(dt);
 	ball.DoWallCollision(walls);
 	brick.Update(ball);
+	pad.Update(wnd.kbd, dt);
 }
 
 void Game::ComposeFrame()
 {
 	ball.Draw(gfx);
 	brick.Draw(gfx);
+	pad.Draw(gfx);
 }
