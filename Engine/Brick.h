@@ -8,7 +8,7 @@ class Brick
 {
 public:
 	Brick() = default;
-	Brick(Vec2& pos_in, float width_in, float height_in);
+	Brick(Vec2& pos_in, float width_in, float height_in, const Color& c);
 	void DoBallCollision(Ball& ball);
 	void Draw(Graphics& gfx) const;
 	void Update(Ball& ball);
@@ -18,6 +18,6 @@ private:
 	float width;
 	float height;
 	Vec2 pos;
-	Color color = Colors::Red;
+	Color color;
 	bool destroyed = false;
 };

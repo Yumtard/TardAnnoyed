@@ -50,7 +50,16 @@ private:
 	Ball ball;
 	FrameTimer ft;
 	RectF walls;
-	Brick brick;
 	Paddle pad;
+
+	static constexpr float brickWidth = 40.0f;
+	static constexpr float brickHeight = 15.0f;
+	static constexpr int bricksAcross = 18;
+	static constexpr int bricksDown = 4;
+	static constexpr int nBricks = bricksAcross * bricksDown;
+
+	Brick brick[nBricks];
+
+
 	/********************************/
 };

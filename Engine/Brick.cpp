@@ -1,10 +1,11 @@
 #include "Brick.h"
 
-Brick::Brick(Vec2 & pos_in, float width_in, float height_in)
+Brick::Brick(Vec2 & pos_in, float width_in, float height_in, const Color& c)
 	:
 	pos(pos_in),
 	width(width_in),
-	height(height_in)
+	height(height_in),
+	color(c)
 {}
 
 void Brick::DoBallCollision(Ball& ball)
