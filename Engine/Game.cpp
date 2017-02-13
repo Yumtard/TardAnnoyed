@@ -57,9 +57,12 @@ void Game::UpdateModel()
 	ball.Update(dt);
 	ball.DoWallCollision(walls);
 
-	for (int i = 0; i < nBricks; ++i)
+	for (Brick& b : brick)
 	{
-		brick[i].Update(ball);
+		if (b.DoBallCollision(ball))
+		{
+			break;
+		}
 	}
 
 	pad.Update(wnd.kbd, dt, walls, ball);
@@ -69,9 +72,9 @@ void Game::ComposeFrame()
 {
 	ball.Draw(gfx);
 	
-	for (int i = 0; i < nBricks; ++i)
+	for (const Brick& b : brick)
 	{
-		brick[i].Draw(gfx);
+		b.Draw(gfx);
 	}
 
 	pad.Draw(gfx);

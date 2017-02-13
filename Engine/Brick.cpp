@@ -8,14 +8,16 @@ Brick::Brick(Vec2 & pos_in, float width_in, float height_in, const Color& c)
 	color(c)
 {}
 
-void Brick::DoBallCollision(Ball& ball)
+bool Brick::DoBallCollision(Ball& ball)
 {
 	RectF rect(GetRect());
-	if (rect.IsOverlapping(ball.GetRect()))
+	if (!destroyed && rect.IsOverlapping(ball.GetRect()))
 	{
 		destroyed = true;
 		ball.ReboundY();
+		return true;
 	}
+	return false;
 }
 
 void Brick::Draw(Graphics& gfx) const
@@ -24,16 +26,8 @@ void Brick::Draw(Graphics& gfx) const
 	{
 		gfx.DrawRect(GetRect(), color);
 	}
-	
 }
 
-void Brick::Update(Ball & ball)
-{
-	if (!destroyed)
-	{
-		DoBallCollision(ball);
-	}
-}
 
 RectF Brick::GetRect() const
 {
