@@ -12,7 +12,6 @@ public:
 	bool DoBallCollision(Ball& ball);
 	void Draw(Graphics& gfx) const;
 	RectF GetRect() const;
-	RectF GetExpanded(RectF& rect_in) const;
 
 private:
 	static constexpr float padding = 1.0f;
