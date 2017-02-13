@@ -17,7 +17,10 @@ public:
 private:
 	static constexpr float halfWidth = 50.0f;
 	static constexpr float halfHeight = 10.0f;
+	static constexpr float wingWidth = 20.0f;
+
 	Vec2 pos;
 	Vec2 vel;
 	Color color = Colors::White;
+	Color wingColor = Colors::Red;
 };

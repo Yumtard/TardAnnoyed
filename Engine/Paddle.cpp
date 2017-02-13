@@ -47,7 +47,11 @@ void Paddle::DoBallCollision(Ball & ball)
 
 void Paddle::Draw(Graphics & gfx) const
 {
-	gfx.DrawRect(GetRect(), color);
+	RectF rect = GetRect();
+	gfx.DrawRect(rect, wingColor);
+	rect.left += wingWidth;
+	rect.right -= wingWidth;
+	gfx.DrawRect(rect, color);
 }
 
 RectF Paddle::GetRect() const
