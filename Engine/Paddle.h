@@ -8,9 +8,9 @@ class Paddle
 {
 public:
 	Paddle(Vec2& pos_in, Vec2& vel_in);
-	void Update(const Keyboard& kbd, float dt, RectF& walls, Ball& ball);
+	void Update(const Keyboard& kbd, float dt, RectF& walls);
 	void DoWallCollision(const RectF& walls);
-	void DoBallCollision(Ball& ball);
+	bool DoBallCollision(Ball& ball);
 	void Draw(Graphics& gfx) const;
 	RectF GetRect() const;
 

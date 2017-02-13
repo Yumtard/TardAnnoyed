@@ -6,7 +6,7 @@ Paddle::Paddle(Vec2 & pos_in, Vec2 & vel_in)
 	vel(vel_in)
 {}
 
-void Paddle::Update(const Keyboard& kbd, float dt, RectF& walls, Ball& ball)
+void Paddle::Update(const Keyboard& kbd, float dt, RectF& walls)
 {
 	if (kbd.KeyIsPressed(VK_LEFT))
 	{
@@ -17,7 +17,6 @@ void Paddle::Update(const Keyboard& kbd, float dt, RectF& walls, Ball& ball)
 		pos += vel * dt;
 	}
 	DoWallCollision(walls);
-	DoBallCollision(ball);
 }
 
 void Paddle::DoWallCollision(const RectF & walls)
@@ -33,7 +32,7 @@ void Paddle::DoWallCollision(const RectF & walls)
 	}
 }
 
-void Paddle::DoBallCollision(Ball & ball)
+bool Paddle::DoBallCollision(Ball & ball)
 {
 	if (ball.GetVel().y > 0.0f)
 	{
@@ -41,8 +40,10 @@ void Paddle::DoBallCollision(Ball & ball)
 		if (rect.IsOverlapping(ball.GetRect()))
 		{
 			ball.ReboundY();
+			return true;
 		}
 	}
+	return false;
 }
 
 void Paddle::Draw(Graphics & gfx) const
