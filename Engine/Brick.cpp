@@ -1,10 +1,8 @@
 #include "Brick.h"
 
-Brick::Brick(RectF& Rect, float width_in, float height_in, const Color& c)
+Brick::Brick(RectF& Rect, const Color& c)
 	:
 	rect(Rect),
-	width(width_in),
-	height(height_in),
 	color(c)
 {}
 
