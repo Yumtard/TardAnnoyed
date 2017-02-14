@@ -8,16 +8,15 @@ class Brick
 {
 public:
 	Brick() = default;
-	Brick(Vec2& pos_in, float width_in, float height_in, const Color& c);
+	Brick(RectF& Rect, float width_in, float height_in, const Color& c);
 	bool DoBallCollision(Ball& ball);
 	void Draw(Graphics& gfx) const;
-	RectF GetRect() const;
 
 private:
 	static constexpr float padding = 1.0f;
 	float width;
 	float height;
-	Vec2 pos;
 	Color color;
+	RectF rect;
 	bool destroyed = false;
 };
