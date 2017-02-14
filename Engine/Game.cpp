@@ -39,7 +39,7 @@ Game::Game( MainWindow& wnd )
 		const Color c = colors[y];
 		for (int x = 0; x < bricksAcross; ++x)
 		{
-			brick[i] = Brick(RectF(topLeft + Vec2(x * brickWidth, y * brickHeight), brickWidth, brickHeight, c));
+			brick[i] = Brick(RectF(topLeft + Vec2(x * brickWidth, y * brickHeight)), brickWidth, brickHeight, c);
 			i++;
 		}
 	}
