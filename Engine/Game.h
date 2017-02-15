@@ -29,6 +29,7 @@
 #include "Brick.h"
 #include "Paddle.h"
 #include "Sound.h"
+#include "Lives.h"
 
 class Game
 {
@@ -71,5 +72,6 @@ private:
 	static constexpr int borderWidth = 10;
 	bool collisionHappened;
 	bool isComplete;
+	Lives lives;
 	/********************************/
 };

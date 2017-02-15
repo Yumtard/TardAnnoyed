@@ -29,7 +29,8 @@ Game::Game( MainWindow& wnd )
 	walls(200.0f, 600.0f, 50.0f, 550.0f),
 	pad(Vec2(400.0f, 500.0f), Vec2(400.0f, 0.0f)),
 	padSound(L"Sounds\\arkpad.wav"),
-	brickSound(L"Sounds\\arkbrick.wav")
+	brickSound(L"Sounds\\arkbrick.wav"),
+	lives(Vec2(200.0f, 40.0f))
 {
 	int i = 0;
 	const Color colors[5] = { Colors::Red, Colors::Green, Colors::Blue, Colors::Yellow, Colors::Gray };
@@ -121,7 +122,16 @@ void Game::UpdateModel(float dt)
 		{
 			if (ball.GetPos().y > pad.GetPos().y)
 			{
-				gState = GameOverState;
+				if (!lives.LivesLeft())
+				{
+					gState = GameOverState;
+				}
+				else
+				{
+					lives.Decrease();
+					ball.Reset();
+					pad.ResetCoolDown();
+				}
 			}
 			else
 			{
@@ -161,6 +171,7 @@ void Game::UpdateModel(float dt)
 					}
 					ball.Reset();
 					pad.ResetCoolDown();
+					lives.Reset();
 					gState = TitleState;
 				}
 			}
@@ -187,6 +198,7 @@ void Game::ComposeFrame()
 	case PlayState:
 		DrawBorders();
 		ball.Draw(gfx);
+		lives.Draw(gfx);
 		for (const Brick& b : brick)
 		{
 			b.Draw(gfx);
