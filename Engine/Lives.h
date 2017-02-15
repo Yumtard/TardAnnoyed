@@ -14,5 +14,7 @@ public:
 
 private:
 	int nLives = 3;
-	Vec2 pos;
+	static constexpr int nLivesMax = 3;
+	Vec2 position;
+	Vec2 pos[nLivesMax];
 };

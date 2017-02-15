@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball(Vec2(300.0f, 500.0f), Vec2(400.0f, -400.0f)),
+	ball(Vec2(300.0f, 450.0f), Vec2(400.0f, -400.0f)),
 	walls(200.0f, 600.0f, 50.0f, 550.0f),
 	pad(Vec2(400.0f, 500.0f), Vec2(400.0f, 0.0f)),
 	padSound(L"Sounds\\arkpad.wav"),
@@ -84,78 +84,83 @@ void Game::UpdateModel(float dt)
 
 		break;
 	case PlayState:
-		ball.Update(dt);
-		int curColIndex;
-		float curColDist;
-		collisionHappened = false;
-		for (int i = 0; i < nBricks; ++i)
+		if (Counter())
 		{
-			float newColDist = (ball.GetPos() - brick[i].GetCenter()).GetLengthSq();
-
-			if (brick[i].CheckBallCollision(ball))
+			ball.Update(dt);
+			int curColIndex;
+			float curColDist;
+			collisionHappened = false;
+			for (int i = 0; i < nBricks; ++i)
 			{
-				if (collisionHappened)
+				float newColDist = (ball.GetPos() - brick[i].GetCenter()).GetLengthSq();
+
+				if (brick[i].CheckBallCollision(ball))
 				{
-					if (newColDist < curColDist)
+					if (collisionHappened)
+					{
+						if (newColDist < curColDist)
+						{
+							curColDist = newColDist;
+							curColIndex = i;
+						}
+					}
+					else
 					{
 						curColDist = newColDist;
 						curColIndex = i;
+						collisionHappened = true;
+					}
+				}
+			}
+
+			if (collisionHappened)
+			{
+				brick[curColIndex].ExecuteBallCollision(ball);
+							brickSound.Play();
+				pad.ResetCoolDown();
+			}
+
+			if (ball.DoWallCollision(walls))
+			{
+				if (ball.GetPos().y > pad.GetPos().y)
+				{
+					if (!lives.LivesLeft())
+					{
+						gState = GameOverState;
+					}
+					else
+					{
+						lives.Decrease();
+						ball.Reset();
+						pad.ResetCoolDown();
+						counter = 0;
 					}
 				}
 				else
 				{
-					curColDist = newColDist;
-					curColIndex = i;
-					collisionHappened = true;
-				}
-			}
-		}
-
-		if (collisionHappened)
-		{
-			brick[curColIndex].ExecuteBallCollision(ball);
-			brickSound.Play();
-			pad.ResetCoolDown();
-		}
-
-		if (ball.DoWallCollision(walls))
-		{
-			if (ball.GetPos().y > pad.GetPos().y)
-			{
-				if (!lives.LivesLeft())
-				{
-					gState = GameOverState;
-				}
-				else
-				{
-					lives.Decrease();
-					ball.Reset();
+									padSound.Play();
 					pad.ResetCoolDown();
 				}
 			}
-			else
+
+			if (pad.DoBallCollision(ball))
 			{
-				padSound.Play();
-				pad.ResetCoolDown();
+							padSound.Play();
 			}
-		}
 
-		if (pad.DoBallCollision(ball))
-		{
-			padSound.Play();
-		}
+			isComplete = true;
+			for (int i = 0; i < nBricks; ++i)
+			{
+				isComplete = isComplete && brick[i].GetDestroyed();
+			}
+			if (isComplete)
+			{
+				gState = GameCompleteState;
+			}
 
-		isComplete = true;
-		for (int i = 0; i < nBricks; ++i)
-		{
-			isComplete = isComplete && brick[i].GetDestroyed();
+			pad.Update(wnd.kbd, dt, walls);
 		}
-		if (isComplete)
-		{
-			gState = GameCompleteState;
-		}
-
-		pad.Update(wnd.kbd, dt, walls);
+		
 		break;
 	case GameOverState:
 		while (!wnd.kbd.KeyIsEmpty())
@@ -172,6 +177,7 @@ void Game::UpdateModel(float dt)
 					ball.Reset();
 					pad.ResetCoolDown();
 					lives.Reset();
+					counter = 0;
 					gState = TitleState;
 				}
 			}
@@ -185,6 +191,16 @@ void Game::DrawBorders()
 	gfx.DrawRect(int(walls.left) - borderWidth, int(walls.top), int(walls.left), int(walls.bottom), Colors::White);
 	gfx.DrawRect(int(walls.left), int(walls.top), int(walls.right), int(walls.top) + borderWidth, Colors::White);
 	gfx.DrawRect(int(walls.right), int(walls.top), int(walls.right) + borderWidth, int(walls.bottom), Colors::White);
+}
+
+bool Game::Counter()
+{
+	counter++;
+	if (counter >= startGame)
+	{
+		return true;
+	}
+	return false;
 }
 
 void Game::ComposeFrame()

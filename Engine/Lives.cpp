@@ -2,8 +2,14 @@
 
 Lives::Lives(Vec2 & pos_in)
 	:
-	pos(pos_in)
-{}
+	position(pos_in)
+{
+	for (int i = 0; i < nLivesMax; ++i)
+	{
+		pos[i] = position;
+		position.x += 30;
+	}
+}
 
 void Lives::Decrease()
 {
@@ -14,8 +20,7 @@ void Lives::Draw(Graphics& gfx)
 {
 	for (int i = 0; i < nLives; ++i)
 	{
-		SpriteCodex::DrawBall(pos, gfx);
-		pos.x += 30;
+		SpriteCodex::DrawBall(pos[i], gfx);
 	}
 }
 

@@ -48,6 +48,7 @@ private:
 	/********************************/
 	/*  User Functions              */
 	void DrawBorders();
+	bool Counter();
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -73,5 +74,7 @@ private:
 	bool collisionHappened;
 	bool isComplete;
 	Lives lives;
+	int counter = 0;
+	int startGame = 240;
 	/********************************/
 };
