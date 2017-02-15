@@ -48,14 +48,20 @@ Game::Game( MainWindow& wnd )
 void Game::Go()
 {
 	gfx.BeginFrame();	
-	UpdateModel();
+	float dt = ft.Mark();
+	while (dt > 0.0f)
+	{
+		float elapsedTime = dt;
+		std::min(0.0025f, elapsedTime);
+		UpdateModel(dt);
+		dt -= elapsedTime;
+	}
 	ComposeFrame();
 	gfx.EndFrame();
 }
 
-void Game::UpdateModel()
+void Game::UpdateModel(float dt)
 {
-	const float dt = ft.Mark();
 	ball.Update(dt);
 	
 	bool collisionHappened = false;
