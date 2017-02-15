@@ -25,9 +25,9 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball(Vec2(300.0f, 300.0f), Vec2(400.0f, 400.0f)),
+	ball(Vec2(300.0f, 200.0f), Vec2(400.0f, 400.0f)),
 	walls(200.0f, 600.0f, 50.0f, 550.0f),
-	pad(Vec2(400.0f, 500.0f), Vec2(600.0f, 0.0f)),
+	pad(Vec2(400.0f, 500.0f), Vec2(400.0f, 0.0f)),
 	padSound(L"Sounds\\arkpad.wav"),
 	brickSound(L"Sounds\\arkbrick.wav")
 {
@@ -106,9 +106,15 @@ void Game::UpdateModel(float dt)
 
 		if (ball.DoWallCollision(walls))
 		{
-			if(ball.GetPos().x > pad.)
-			padSound.Play();
-			pad.ResetCoolDown();
+			if (ball.GetPos().y > pad.GetPos().y)
+			{
+				isStarted = false;
+			}
+			else
+			{
+				padSound.Play();
+				pad.ResetCoolDown();
+			}
 		}
 
 		if (pad.DoBallCollision(ball))
@@ -120,6 +126,13 @@ void Game::UpdateModel(float dt)
 	}
 	}
 
+void Game::DrawBorders()
+{
+	gfx.DrawRect(int(walls.left) - borderWidth, int(walls.top), int(walls.left), int(walls.bottom), Colors::White);
+	gfx.DrawRect(int(walls.left), int(walls.top), int(walls.right), int(walls.top) + borderWidth, Colors::White);
+	gfx.DrawRect(int(walls.right), int(walls.top), int(walls.right) + borderWidth, int(walls.bottom), Colors::White);
+}
+
 	
 
 void Game::ComposeFrame()
@@ -130,6 +143,7 @@ void Game::ComposeFrame()
 	}
 	else
 	{
+		DrawBorders();
 		ball.Draw(gfx);
 		for (const Brick& b : brick)
 		{

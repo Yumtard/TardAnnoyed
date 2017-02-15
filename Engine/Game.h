@@ -42,6 +42,7 @@ private:
 	void UpdateModel(float dt);
 	/********************************/
 	/*  User Functions              */
+	void DrawBorders();
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -52,7 +53,7 @@ private:
 	FrameTimer ft;
 	RectF walls;
 	Paddle pad;
-
+	
 	static constexpr float brickWidth = 40.0f;
 	static constexpr float brickHeight = 20.0f;
 	static constexpr int bricksAcross = 10;
@@ -64,5 +65,6 @@ private:
 	Sound padSound;
 	Sound brickSound;
 	bool isStarted = false;
+	static constexpr int borderWidth = 10;
 	/********************************/
 };

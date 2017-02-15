@@ -77,3 +77,8 @@ void Paddle::ResetCoolDown()
 {
 	coolDown = false;
 }
+
+Vec2 Paddle::GetPos() const
+{
+	return pos;
+}
