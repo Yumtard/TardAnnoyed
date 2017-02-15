@@ -106,6 +106,7 @@ void Game::UpdateModel(float dt)
 
 		if (ball.DoWallCollision(walls))
 		{
+			if(ball.GetPos().x > pad.)
 			padSound.Play();
 			pad.ResetCoolDown();
 		}

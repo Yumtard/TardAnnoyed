@@ -14,6 +14,7 @@ public:
 	void Draw(Graphics& gfx) const;
 	RectF GetRect() const;
 	void ResetCoolDown();
+	Vec2 GetPos() const;
 
 private:
 	static constexpr float halfWidth = 40.0f;
