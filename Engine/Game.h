@@ -33,6 +33,10 @@
 class Game
 {
 public:
+	enum GameState
+	{
+		TitleState, PlayState, GameOverState
+	};
 	Game( class MainWindow& wnd );
 	Game( const Game& ) = delete;
 	Game& operator=( const Game& ) = delete;
@@ -61,10 +65,10 @@ private:
 	static constexpr int nBricks = bricksAcross * bricksDown;
 
 	Brick brick[nBricks];
-
+	GameState gState = TitleState;
 	Sound padSound;
 	Sound brickSound;
-	bool isStarted = false;
 	static constexpr int borderWidth = 10;
+	bool collisionHappened = false;
 	/********************************/
 };

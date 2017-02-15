@@ -61,17 +61,16 @@ void Game::Go()
 
 void Game::UpdateModel(float dt)
 {
-	if (!isStarted)
+	switch(gState)
 	{
+	case TitleState:
 		if (wnd.kbd.KeyIsPressed(VK_RETURN))
 		{
-			isStarted = true;
+			gState = PlayState;
 		}
-	}
-	else
-	{
+		break;
+	case PlayState:
 		ball.Update(dt);
-		bool collisionHappened = false;
 		int curColIndex;
 		float curColDist;
 
@@ -108,7 +107,7 @@ void Game::UpdateModel(float dt)
 		{
 			if (ball.GetPos().y > pad.GetPos().y)
 			{
-				isStarted = false;
+				gState = GameOverState;
 			}
 			else
 			{
@@ -123,8 +122,12 @@ void Game::UpdateModel(float dt)
 		}
 
 		pad.Update(wnd.kbd, dt, walls);
+		break;
+	case GameOverState:
+		gState = TitleState;
+		break;
 	}
-	}
+}
 
 void Game::DrawBorders()
 {
@@ -137,12 +140,13 @@ void Game::DrawBorders()
 
 void Game::ComposeFrame()
 {
-	if (!isStarted)
+	switch (gState)
 	{
+	case TitleState:
 		SpriteCodex::DrawTitle(Vec2(300.0f, 150.0f), gfx);
-	}
-	else
-	{
+		break;
+		
+	case PlayState:
 		DrawBorders();
 		ball.Draw(gfx);
 		for (const Brick& b : brick)
@@ -150,6 +154,6 @@ void Game::ComposeFrame()
 			b.Draw(gfx);
 		}
 		pad.Draw(gfx);
-	}
-	
+		break;
+	}	
 }
