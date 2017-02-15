@@ -116,7 +116,7 @@ void Game::UpdateModel(float dt)
 			if (collisionHappened)
 			{
 				brick[curColIndex].ExecuteBallCollision(ball);
-							brickSound.Play();
+				brickSound.Play();
 				pad.ResetCoolDown();
 			}
 
@@ -138,14 +138,14 @@ void Game::UpdateModel(float dt)
 				}
 				else
 				{
-									padSound.Play();
+					padSound.Play();
 					pad.ResetCoolDown();
 				}
 			}
 
 			if (pad.DoBallCollision(ball))
 			{
-							padSound.Play();
+				padSound.Play();
 			}
 
 			isComplete = true;
