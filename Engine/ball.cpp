@@ -74,3 +74,8 @@ Vec2 Ball::GetPos() const
 	return pos;
 }
 
+void Ball::Reset()
+{
+
+}
+

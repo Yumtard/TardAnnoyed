@@ -73,10 +73,11 @@ void Game::UpdateModel(float dt)
 		ball.Update(dt);
 		int curColIndex;
 		float curColDist;
-
+		collisionHappened = false;
 		for (int i = 0; i < nBricks; ++i)
 		{
 			float newColDist = (ball.GetPos() - brick[i].GetCenter()).GetLengthSq();
+
 			if (brick[i].CheckBallCollision(ball))
 			{
 				if (collisionHappened)

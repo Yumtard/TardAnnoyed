@@ -69,6 +69,6 @@ private:
 	Sound padSound;
 	Sound brickSound;
 	static constexpr int borderWidth = 10;
-	bool collisionHappened = false;
+	bool collisionHappened;
 	/********************************/
 };
