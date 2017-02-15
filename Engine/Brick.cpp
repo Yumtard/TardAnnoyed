@@ -19,7 +19,7 @@ void Brick::ExecuteBallCollision(Ball& ball)
 	{
 		ball.ReboundY();
 	}
-	else if (ball.GetPos().x > rect.left && ball.GetPos().x < rect.right)
+	else if (ballPos.x > rect.left && ballPos.x < rect.right)
 	{
 		ball.ReboundY();
 	}

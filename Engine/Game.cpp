@@ -48,13 +48,12 @@ Game::Game( MainWindow& wnd )
 void Game::Go()
 {
 	gfx.BeginFrame();	
-	float dt = ft.Mark();
-	while (dt > 0.0f)
+	float elapsedTime = ft.Mark();
+	while (elapsedTime > 0.0f)
 	{
-		float elapsedTime = dt;
-		std::min(0.0025f, elapsedTime);
+		const float dt = std::min(0.0025f, elapsedTime);
 		UpdateModel(dt);
-		dt -= elapsedTime;
+		elapsedTime -= dt;
 	}
 	ComposeFrame();
 	gfx.EndFrame();
