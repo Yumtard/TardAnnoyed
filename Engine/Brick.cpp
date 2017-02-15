@@ -1,10 +1,12 @@
 #include "Brick.h"
 #include <assert.h>
 
-Brick::Brick(RectF& Rect, const Color& c)
+Brick::Brick(RectF& Rect, const Color& c, int hp_in)
 	:
 	rect(Rect),
-	color(c)
+	color(c),
+	hp(hp_in),
+	resetHp(hp_in)
 {}
 
 bool Brick::CheckBallCollision(const Ball & ball) const
@@ -27,9 +29,11 @@ void Brick::ExecuteBallCollision(Ball& ball)
 	{
 		ball.ReboundX();
 	}
-	destroyed = true;
-	
-			
+	hp--;
+	if (hp <= 0)
+	{
+		destroyed = true;
+	}			
 }
 
 void Brick::Draw(Graphics& gfx) const
@@ -48,5 +52,11 @@ Vec2 Brick::GetCenter() const
 bool Brick::GetDestroyed() const
 {
 	return destroyed;
+}
+
+void Brick::Reset()
+{
+	destroyed = false;
+	hp = resetHp;
 }
 

@@ -76,6 +76,9 @@ Vec2 Ball::GetPos() const
 
 void Ball::Reset()
 {
-
+	pos.x = 300.0f; 
+	pos.y = 500.0f;
+	vel.x = 400.0f;
+	vel.y = -400.0f;
 }
 

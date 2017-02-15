@@ -25,21 +25,26 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball(Vec2(300.0f, 200.0f), Vec2(400.0f, 400.0f)),
+	ball(Vec2(300.0f, 500.0f), Vec2(400.0f, -400.0f)),
 	walls(200.0f, 600.0f, 50.0f, 550.0f),
 	pad(Vec2(400.0f, 500.0f), Vec2(400.0f, 0.0f)),
 	padSound(L"Sounds\\arkpad.wav"),
 	brickSound(L"Sounds\\arkbrick.wav")
 {
 	int i = 0;
-	const Color colors[4] = { Colors::Red, Colors::Green, Colors::Blue, Colors::Yellow };
+	const Color colors[5] = { Colors::Red, Colors::Green, Colors::Blue, Colors::Yellow, Colors::Gray };
 	const Vec2 topLeft(200.0f, 100.0f);
+	int hp = 1;
 	for (int y = 0; y < bricksDown; ++y)
 	{
 		const Color c = colors[y];
 		for (int x = 0; x < bricksAcross; ++x)
 		{
-			brick[i] = Brick(RectF(topLeft + Vec2(x * brickWidth, y * brickHeight), brickWidth, brickHeight), c);
+			if (y > 3)
+			{
+				hp = 2;
+			}
+			brick[i] = Brick(RectF(topLeft + Vec2(x * brickWidth, y * brickHeight), brickWidth, brickHeight), c, hp);
 			i++;
 		}
 	}
@@ -150,6 +155,12 @@ void Game::UpdateModel(float dt)
 			{
 				if (event.GetCode() == VK_RETURN)
 				{
+					for (int i = 0; i < nBricks; ++i)
+					{
+						brick[i].Reset();
+					}
+					ball.Reset();
+					pad.ResetCoolDown();
 					gState = TitleState;
 				}
 			}
