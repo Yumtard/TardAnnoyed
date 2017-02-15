@@ -13,6 +13,7 @@ public:
 	bool DoBallCollision(Ball& ball);
 	void Draw(Graphics& gfx) const;
 	RectF GetRect() const;
+	void ResetCoolDown();
 
 private:
 	static constexpr float halfWidth = 50.0f;
@@ -23,4 +24,5 @@ private:
 	Vec2 vel;
 	Color color = Colors::White;
 	Color wingColor = Colors::Red;
+	bool coolDown = false;
 };

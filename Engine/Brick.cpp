@@ -44,3 +44,4 @@ Vec2 Brick::GetCenter() const
 {
 	return rect.GetCenter();
 }
+
