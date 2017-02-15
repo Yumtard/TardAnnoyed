@@ -64,10 +64,18 @@ void Game::UpdateModel(float dt)
 	switch(gState)
 	{
 	case TitleState:
-		if (wnd.kbd.KeyIsPressed(VK_RETURN))
+		while (!wnd.kbd.KeyIsEmpty())
 		{
-			gState = PlayState;
+			const Keyboard::Event event = wnd.kbd.ReadKey();
+			if (event.IsPress())
+			{
+				if (event.GetCode() == VK_RETURN)
+				{
+					gState = PlayState;
+				}
+			}
 		}
+
 		break;
 	case PlayState:
 		ball.Update(dt);
@@ -122,10 +130,30 @@ void Game::UpdateModel(float dt)
 			padSound.Play();
 		}
 
+		isComplete = true;
+		for (int i = 0; i < nBricks; ++i)
+		{
+			isComplete = isComplete && brick[i].GetDestroyed();
+		}
+		if (isComplete)
+		{
+			gState = GameCompleteState;
+		}
+
 		pad.Update(wnd.kbd, dt, walls);
 		break;
 	case GameOverState:
-		gState = TitleState;
+		while (!wnd.kbd.KeyIsEmpty())
+		{
+			const Keyboard::Event event = wnd.kbd.ReadKey();
+			if (event.IsPress())
+			{
+				if (event.GetCode() == VK_RETURN)
+				{
+					gState = TitleState;
+				}
+			}
+		}
 		break;
 	}
 }
@@ -136,8 +164,6 @@ void Game::DrawBorders()
 	gfx.DrawRect(int(walls.left), int(walls.top), int(walls.right), int(walls.top) + borderWidth, Colors::White);
 	gfx.DrawRect(int(walls.right), int(walls.top), int(walls.right) + borderWidth, int(walls.bottom), Colors::White);
 }
-
-	
 
 void Game::ComposeFrame()
 {
@@ -155,6 +181,14 @@ void Game::ComposeFrame()
 			b.Draw(gfx);
 		}
 		pad.Draw(gfx);
+		break;
+
+	case GameOverState:
+		SpriteCodex::DrawGameOver(Vec2(275.0f, 250.0f), gfx);
+		break;
+
+	case GameCompleteState:
+		SpriteCodex::DrawComplete(Vec2(275.0f, 250.0f), gfx);
 		break;
 	}	
 }

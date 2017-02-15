@@ -35,7 +35,7 @@ class Game
 public:
 	enum GameState
 	{
-		TitleState, PlayState, GameOverState
+		TitleState, PlayState, GameOverState, GameCompleteState
 	};
 	Game( class MainWindow& wnd );
 	Game( const Game& ) = delete;
@@ -70,5 +70,6 @@ private:
 	Sound brickSound;
 	static constexpr int borderWidth = 10;
 	bool collisionHappened;
+	bool isComplete;
 	/********************************/
 };

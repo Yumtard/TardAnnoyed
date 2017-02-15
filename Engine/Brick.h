@@ -13,6 +13,7 @@ public:
 	void ExecuteBallCollision(Ball& ball);
 	void Draw(Graphics& gfx) const;
 	Vec2 GetCenter() const;
+	bool GetDestroyed() const;
 
 private:
 	static constexpr float padding = 1.0f;
