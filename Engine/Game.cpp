@@ -25,7 +25,7 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball(Vec2(300.0f, 450.0f), Vec2(400.0f, -400.0f)),
+	ball(Vec2(300.0f, 450.0f), 500.0f),
 	walls(200.0f, 600.0f, 50.0f, 550.0f),
 	pad(Vec2(400.0f, 500.0f), Vec2(400.0f, 0.0f)),
 	padSound(L"Sounds\\arkpad.wav"),

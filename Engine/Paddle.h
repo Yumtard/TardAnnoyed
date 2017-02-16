@@ -15,7 +15,7 @@ public:
 	RectF GetRect() const;
 	void ResetCoolDown();
 	Vec2 GetPos() const;
-	void ChangeBallVel(Ball& ball, const Vec2& ballPos);
+	void AdjustBallVel(Ball& ball);
 
 private:
 	static constexpr float halfWidth = 40.0f;

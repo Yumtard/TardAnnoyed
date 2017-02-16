@@ -1,11 +1,15 @@
 #include "Ball.h"
 
-Ball::Ball(const Vec2 & pos_in, const Vec2 & vel_in)
+Ball::Ball(const Vec2 & pos_in, float speed_in)
 	:
 	pos(pos_in),
-	vel(vel_in),
-	velReset(vel_in)
-{}
+	resetPos(pos_in),
+	speed(speed_in),
+	vel(speed_in, -speed_in)
+{
+	vel.Normalize();
+	vel *= speed;
+}
 
 void Ball::Draw(Graphics & gfx) const
 {
@@ -77,28 +81,20 @@ Vec2 Ball::GetPos() const
 
 void Ball::Reset()
 {
-	pos.x = 300.0f; 
-	pos.y = 500.0f;
-	vel.x = 400.0f;
-	vel.y = -400.0f;
+	pos = resetPos;
+	vel.x = speed;
+	vel.y = -speed;
+	vel.Normalize();
+	vel *= speed;
 }
 
-void Ball::ResetVelY()
+void Ball::SetVel(Vec2 & newVel)
 {
-	vel.y = -velReset.y;
-}
-void Ball::ResetVelX(float x)
-{
-	vel.x = (velReset.x * x);
+	vel = newVel;
 }
 
-void Ball::AdjustVelX(float x)
+float Ball::GetSpeed() const
 {
-	vel.x /= x;
-}
-
-void Ball::AdjustVelY(float x)
-{
-	vel.y /= x;
+	return speed;
 }
 
