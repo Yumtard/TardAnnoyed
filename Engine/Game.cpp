@@ -118,6 +118,7 @@ void Game::UpdateModel(float dt)
 				brick[curColIndex].ExecuteBallCollision(ball);
 				brickSound.Play();
 				pad.ResetCoolDown();
+				ball.IncreaseSpeed();
 			}
 
 			if (ball.DoWallCollision(walls))

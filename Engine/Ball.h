@@ -19,11 +19,14 @@ public:
 	void Reset();
 	void SetVel(Vec2& newVel);
 	float GetSpeed() const;
+	void IncreaseSpeed();
 
 private:
 	Vec2 pos;
 	Vec2 resetPos;
 	Vec2 vel;
 	float speed;
+	float resetSpeed;
+
 	static constexpr float radius = 7.0f;
 };

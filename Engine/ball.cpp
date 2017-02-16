@@ -5,7 +5,8 @@ Ball::Ball(const Vec2 & pos_in, float speed_in)
 	pos(pos_in),
 	resetPos(pos_in),
 	speed(speed_in),
-	vel(speed_in, -speed_in)
+	vel(speed_in, -speed_in),
+	resetSpeed(speed_in)
 {
 	vel.Normalize();
 	vel *= speed;
@@ -86,6 +87,7 @@ void Ball::Reset()
 	vel.y = -speed;
 	vel.Normalize();
 	vel *= speed;
+	speed = resetSpeed;
 }
 
 void Ball::SetVel(Vec2 & newVel)
@@ -96,5 +98,10 @@ void Ball::SetVel(Vec2 & newVel)
 float Ball::GetSpeed() const
 {
 	return speed;
+}
+
+void Ball::IncreaseSpeed()
+{
+	speed += 5.0f;
 }
 
