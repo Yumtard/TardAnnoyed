@@ -17,9 +17,14 @@ public:
 	Vec2 GetVel() const;
 	Vec2 GetPos() const;
 	void Reset();
+	void ResetVelY();
+	void ResetVelX(float x);
+	void AdjustVelX(float x);
+	void AdjustVelY(float x);
 
 private:
 	Vec2 pos;
 	Vec2 vel;
+	Vec2 velReset;
 	static constexpr float radius = 7.0f;
 };

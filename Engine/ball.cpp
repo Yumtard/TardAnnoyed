@@ -3,7 +3,8 @@
 Ball::Ball(const Vec2 & pos_in, const Vec2 & vel_in)
 	:
 	pos(pos_in),
-	vel(vel_in)
+	vel(vel_in),
+	velReset(vel_in)
 {}
 
 void Ball::Draw(Graphics & gfx) const
@@ -80,5 +81,24 @@ void Ball::Reset()
 	pos.y = 500.0f;
 	vel.x = 400.0f;
 	vel.y = -400.0f;
+}
+
+void Ball::ResetVelY()
+{
+	vel.y = -velReset.y;
+}
+void Ball::ResetVelX(float x)
+{
+	vel.x = (velReset.x * x);
+}
+
+void Ball::AdjustVelX(float x)
+{
+	vel.x /= x;
+}
+
+void Ball::AdjustVelY(float x)
+{
+	vel.y /= x;
 }
 

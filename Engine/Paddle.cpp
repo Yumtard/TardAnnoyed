@@ -42,10 +42,12 @@ bool Paddle::DoBallCollision(Ball & ball)
 			const Vec2 ballPos = ball.GetPos();
 			if (std::signbit(ball.GetVel().x) == std::signbit(ballPos.x - pos.x))
 			{
+				ChangeBallVel(ball, ballPos);
 				ball.ReboundY();
 			}
 			else if (ballPos.x > rect.left && ballPos.x < rect.right)
 			{
+				ChangeBallVel(ball, ballPos);
 				ball.ReboundY();
 			}
 			else
@@ -82,3 +84,51 @@ Vec2 Paddle::GetPos() const
 {
 	return pos;
 }
+
+void Paddle::ChangeBallVel(Ball& ball, const Vec2& ballPos)
+{
+	const float dist = pos.x - ballPos.x;
+	if (dist > 30.0f)
+	{
+		ball.ResetVelY();
+		ball.ResetVelX(-1.0f);
+		ball.AdjustVelY(3.0f);
+	}
+	else if (dist > 20.0f)
+	{
+		ball.ResetVelY();
+		ball.ResetVelX(-1.0f);
+		ball.AdjustVelY(2.0f);
+	}
+	else if (dist > 10.0f)
+	{
+		ball.ResetVelY();
+		ball.ResetVelX(-1.0f);
+		ball.AdjustVelX(2.0f);
+	}
+	else if (dist < -30.0f)
+	{
+		ball.ResetVelY();
+		ball.ResetVelX(1.0f);
+		ball.AdjustVelY(3.0f);
+	}
+	else if (dist < -20.0f)
+	{
+		ball.ResetVelY();
+		ball.ResetVelX(1.0f);
+		ball.AdjustVelY(2.0f);
+	}
+	else if (dist < -10.0f)
+	{
+		ball.ResetVelY();
+		ball.ResetVelX(1.0f);
+		ball.AdjustVelX(2.0f);
+	}
+	else
+	{
+		ball.ResetVelY();
+		ball.ResetVelX(1.0f);
+		ball.AdjustVelX(3.0f);
+	}
+}
+
